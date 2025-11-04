@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N-Body Problem Simulation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="simulation-container"></div>
+    
+    <div id="control-panel">
+        <h3>N-Body Problem Simulation</h3>
+        
+        <div id="setup-controls">
+            <div class="status-info">
+                <div class="status-text">Setup Mode</div>
+                <div class="instruction">Drag the particles to set initial positions</div>
+            </div>
+            
+            <div class="control-group">
+                <label for="num-bodies">Number of Bodies: <span id="num-bodies-value">3</span></label>
+                <input type="range" id="num-bodies" min="2" max="100" value="3">
+            </div>
+            
+            <div class="control-group">
+                <label for="mass-distribution">Mass Distribution:</label>
+                <select id="mass-distribution">
+                    <option value="equal">Equal Mass</option>
+                    <option value="random">Random Mass</option>
+                    <option value="central">Central Mass</option>
+                    <option value="gaussian">Gaussian (μ, σ)</option>
+                    <option value="powerlaw">Power Law (k)</option>
+                    <option value="uniform">Uniform (a, b)</option>
+                </select>
+                
+                <div id="gaussian-params" class="distribution-params" style="display: none;">
+                    <label for="gaussian-mu">μ (mean): <span id="gaussian-mu-value">1.00</span></label>
+                    <input type="range" id="gaussian-mu" min="0.1" max="5" step="0.1" value="1">
+                    <label for="gaussian-sigma">σ (std dev): <span id="gaussian-sigma-value">0.30</span></label>
+                    <input type="range" id="gaussian-sigma" min="0.1" max="2" step="0.1" value="0.3">
+                </div>
+                
+                <div id="powerlaw-params" class="distribution-params" style="display: none;">
+                    <label for="powerlaw-k">k (exponent): <span id="powerlaw-k-value">2.0</span></label>
+                    <input type="range" id="powerlaw-k" min="0.5" max="4" step="0.1" value="2">
+                    <label for="powerlaw-min">Min mass: <span id="powerlaw-min-value">0.10</span></label>
+                    <input type="range" id="powerlaw-min" min="0.05" max="1" step="0.05" value="0.1">
+                    <label for="powerlaw-max">Max mass: <span id="powerlaw-max-value">10.0</span></label>
+                    <input type="range" id="powerlaw-max" min="2" max="50" step="1" value="10">
+                    <div class="description">Higher k → more small bodies<br/>Many small + few massive bodies</div>
+                </div>
+                
+                <div id="uniform-params" class="distribution-params" style="display: none;">
+                    <label for="uniform-a">a (min): <span id="uniform-a-value">0.50</span></label>
+                    <input type="range" id="uniform-a" min="0.1" max="3" step="0.1" value="0.5">
+                    <label for="uniform-b">b (max): <span id="uniform-b-value">2.00</span></label>
+                    <input type="range" id="uniform-b" min="0.5" max="10" step="0.1" value="2">
+                </div>
+                
+                <div id="distribution-description">All bodies have mass = 1</div>
+            </div>
+            
+            <button id="start-simulation" class="primary-button">Start Simulation</button>
+        </div>
+        
+        <div id="simulation-controls" style="display: none;">
+            <div class="button-group">
+                <button id="pause-resume" class="action-button">Pause</button>
+                <button id="reset-simulation" class="secondary-button">Reset</button>
+            </div>
+            
+            <div class="control-group">
+                <label for="speed-control">Speed: <span id="speed-value">1</span>x</label>
+                <input type="range" id="speed-control" min="1" max="10" value="1">
+            </div>
+            
+            <div class="instructions">
+                Drag to rotate view<br>
+                Scroll to zoom in/out
+            </div>
+        </div>
+    </div>
+    
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        Loading N-Body Simulation...
+    </div>
+
+    <!-- Only Three.js is needed now -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="simulation.js"></script>
+</body>
+</html>
